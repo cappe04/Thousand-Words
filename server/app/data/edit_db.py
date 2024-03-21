@@ -27,6 +27,9 @@ def init_lang_db(lang: str):
 
     db.close()
 
+def drop_lang_db(lang):
+    os.remove(os.path.join(current_app.root_path, f"data/db/{lang}.db"))
+
 
 
 

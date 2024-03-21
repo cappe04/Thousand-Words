@@ -1,5 +1,4 @@
-from app.data.init_databases import init_lang_db
-from app.data.drop_databases import drop_lang_db
+from app.data.edit_db import init_lang_db, drop_lang_db
 
 import click
 
