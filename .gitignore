@@ -1,4 +1,5 @@
 server/.venv
+server/app/data/db/*
 
 .env
 
