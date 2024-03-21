@@ -11,6 +11,14 @@ def drop_table_str(table):
 def insert_into_table_str(table):
     return f"INSERT INTO {table}(word, translation, type) VALUES(?, ?, ?)"
 
+def lang_folder_exists(lang):
+    path = os.path.join(current_app.root_path, f"data/lang/{lang}")
+    return os.path.exists(path)
+
+def db_file_exists(lang):
+    path = os.path.join(current_app.root_path, f"data/db/{lang}.db")
+    return os.path.exists(path)
+
 def init_lang_db(lang: str):
     lang_path = os.path.join(current_app.root_path, f"data/lang/{lang}")
 
