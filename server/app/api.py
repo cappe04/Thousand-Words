@@ -39,5 +39,7 @@ def lang_api(lang):
         args = (start, end)
     
     result = db.execute(query, args)
+
+    # Return result
     return result.fetchall()
 
