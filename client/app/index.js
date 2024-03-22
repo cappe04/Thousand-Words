@@ -5,9 +5,11 @@ import { Flashcard, FlashcardNavButton, HeaderIconButton, HeaderWordButton } fro
 
 import { COLORS, SHADOWS } from "../constants";
 import icons from "../constants/icons";
+import { React, useState } from "react";
 
 const Home = () => {
     const router = useRouter();
+    const [temp1, setTemp1] = useState(true)
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -26,7 +28,7 @@ const Home = () => {
             />
     
         <View>
-            <HeaderWordButton />
+            <HeaderWordButton text={temp1 ? "Today's new words": "Word repetitions"} callback={()=>{ setTemp1(!temp1) }}/>
         </View>
 
         <View style={{
