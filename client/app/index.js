@@ -1,9 +1,10 @@
 import { Stack, useRouter } from "expo-router";
 import { View, Text, SafeAreaView } from "react-native"
 
-import { Flashcard, FlashcardNav } from "../components"
+import { Flashcard, FlashcardNavButton, HeaderIconButton, HeaderWordButton } from "../components"
 
 import { COLORS, SHADOWS } from "../constants";
+import icons from "../constants/icons";
 
 const Home = () => {
     const router = useRouter();
@@ -13,30 +14,40 @@ const Home = () => {
             <Stack.Screen 
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite },
-                    headerShadowVisible: false,
+                    headerShadowVisible: true,
                     headerLeft: () => (
-                        <Text style={{color: COLORS.primary, fontSize: 17, padding: 10}}>Previous Day</Text>
+                        <HeaderIconButton icon={icons.MENU} dimension={"60%"} callback={() => {}}/>
                     ),
                     headerRight: () => (
-                        <Text style={{color: COLORS.primary, fontSize: 17, padding: 10}}>Next Day</Text>
+                        <HeaderIconButton icon={icons.OPTIONS} dimension={"60%"} callback={() => {}}/>
                     ),
                     headerTitle: "Day 1",
                 }}
             />
     
+        <View>
+            <HeaderWordButton />
+        </View>
+
         <View style={{
             marginVertical: 100
         }}>
             <View>
                 <Flashcard word={{
-                    word: "война",
-                    translation: "war",
-                    type: "noun",
+                    word: "принести",
+                    translation: "to bring",
+                    type: "verb",
                 }}/>
             </View>
-
-            <View>
-                <FlashcardNav />
+            <View style={{
+                display: "flex",
+                padding: 10,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-evenly",
+            }}>
+                <FlashcardNavButton text={"Previous"}/>
+                <FlashcardNavButton text={"Next"}/>
             </View>
         </View>
 

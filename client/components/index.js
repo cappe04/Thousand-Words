@@ -1,9 +1,11 @@
 import Flashcard from "./main/Flashcard";
-import FlashcardNav from "./main/FlashcardNav";
 import FlashcardNavButton from "./common/FlashcardNavButton";
+import HeaderIconButton from "./common/HeaderIconButton";
+import HeaderWordButton from "./common/HeaderWordButton";
 
 export {
     Flashcard,
-    FlashcardNav,
-    FlashcardNavButton
+    FlashcardNavButton,
+    HeaderIconButton,
+    HeaderWordButton
 }

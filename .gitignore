@@ -1,8 +1,18 @@
 server/.venv
 server/app/data/db/*
 
-client/.expo
-client/node_modules
+client/node_modules/
+client/.expo/
+client/dist/
+client/npm-debug.*
+client/*.jks
+client/*.p8
+client/*.p12
+client/*.key
+client/*.mobileprovision
+client/*.orig.*
+client/web-build/
+
 
 .env
 
