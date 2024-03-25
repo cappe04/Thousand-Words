@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-import { COLORS, SHADOWS } from "../../constants";
+import { COLORS, SHADOWS } from "../../../constants";
 
 const Flashcard = ({ word }) => {
     const [flipped, setFlipped] = useState(false)
@@ -25,8 +25,8 @@ export default Flashcard;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: COLORS.lightWhite,
-        alignItems: "center",
-        borderRadius: 25,
+        alignItems: "center",   
+        borderRadius: 20,
         marginHorizontal: 50,
         marginVertical: 25,
         ...SHADOWS.small,

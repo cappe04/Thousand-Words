@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet, Text } from "react-native"
+import { TouchableOpacity, StyleSheet, Text } from "react-native";
 
-import { COLORS, SHADOWS } from "../../constants";
+import { COLORS, SHADOWS } from "../../../constants";
 
-const FlashcardNavButton = ({ text }) => {
+const FlashcardNavButton = ({ text, callback }) => {
 
     return (
-        <TouchableOpacity style={styles.container} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.container} activeOpacity={0.8} onPress={callback}>
             <Text style={styles.textBig}>{text}</Text>
         </TouchableOpacity>
     )

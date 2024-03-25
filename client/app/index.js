@@ -1,7 +1,7 @@
 import { Stack, useRouter } from "expo-router";
 import { View, Text, SafeAreaView } from "react-native"
 
-import { Flashcard, FlashcardNavButton, HeaderIconButton, HeaderWordButton } from "../components"
+import { HeaderIconButton, NavBar, FlashcardArea, Flashcard, FlashcardNavButton } from "../components"
 
 import { COLORS, SHADOWS } from "../constants";
 import icons from "../constants/icons";
@@ -9,8 +9,24 @@ import { React, useState } from "react";
 
 const Home = () => {
     const router = useRouter();
-    const [temp1, setTemp1] = useState(true)
 
+    const learnWords = [
+        { word: "принести", translation: "to bring", type: "verb", },
+        { word: "комната", translation: "a room", type: "noun", },
+        { word: "часть", translation: "part, share, department", type: "noun", },
+        { word: "сегодня", translation: "today", type: "adverb", },
+    ];
+
+    const practiceWords = [
+        { word: "1", translation: "to bring", type: "verb", },
+        { word: "2", translation: "a room", type: "noun", },
+        { word: "3", translation: "part, share, department", type: "noun", },
+        { word: "4", translation: "today", type: "adverb", },
+        { word: "5", translation: "today", type: "adverb", },
+    ];
+
+    const [words, setWords] = useState(learnWords)
+    
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
             <Stack.Screen 
@@ -27,31 +43,18 @@ const Home = () => {
                 }}
             />
     
-        <View>
-            <HeaderWordButton text={temp1 ? "Today's new words": "Word repetitions"} callback={()=>{ setTemp1(!temp1) }}/>
+        
+        <View style={{ paddingTop: 17 }}>
+            <NavBar callback={(learningMode) => { setWords(learningMode ? learnWords: practiceWords) }}/>
         </View>
 
-        <View style={{
-            marginVertical: 100
-        }}>
-            <View>
-                <Flashcard word={{
-                    word: "принести",
-                    translation: "to bring",
-                    type: "verb",
-                }}/>
-            </View>
-            <View style={{
-                display: "flex",
-                padding: 10,
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-evenly",
-            }}>
-                <FlashcardNavButton text={"Previous"}/>
-                <FlashcardNavButton text={"Next"}/>
-            </View>
+        
+
+        <View style={{ paddingTop: 100 }}>
+            <FlashcardArea words={words}/>
         </View>
+        
+        
 
         </SafeAreaView>
     )

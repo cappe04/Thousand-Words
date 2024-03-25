@@ -1,7 +1,7 @@
 import { Image, TouchableOpacity, StyleSheet } from "react-native";
 import { COLORS } from "../../constants";
 
-const ScreenHeaderBtn = ({ icon, dimension, callback }) => {
+const HeaderIconButton = ({ icon, dimension, callback }) => {
     return (
         <TouchableOpacity style={styles.container} onPress={callback}>
             <Image
@@ -13,7 +13,7 @@ const ScreenHeaderBtn = ({ icon, dimension, callback }) => {
     );
 };
 
-export default ScreenHeaderBtn;
+export default HeaderIconButton;
 
 const styles = StyleSheet.create({
     container: {
