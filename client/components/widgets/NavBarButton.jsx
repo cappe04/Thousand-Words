@@ -1,11 +1,11 @@
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import { COLORS } from "../../constants";
 
-const NavBarButton = ({ text, activated, callback }) => {
+const NavBarButton = ({ id, text, activated, callback }) => {
     return (
         <TouchableOpacity style={
             [styles.container, { backgroundColor: activated ? COLORS.gray2: COLORS.lightWhite }]
-        } onPress={activated ? () => {}: callback} activeOpacity={1}>
+        } onPress={() => { callback(id); }} activeOpacity={1}>
             <Text style={
                 [styles.text, { color: activated ? COLORS.lightWhite: COLORS.gray2 }]
             }>{ text }</Text>

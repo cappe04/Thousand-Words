@@ -3,8 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 import { COLORS, SHADOWS } from "../../../constants";
 
-const Flashcard = ({ word }) => {
-    const [flipped, setFlipped] = useState(false)
+const Flashcard = ({ word, flipped, setFlipped }) => {
 
     return (
         <TouchableOpacity 
@@ -13,8 +12,16 @@ const Flashcard = ({ word }) => {
             activeOpacity={0.8}
         >
             <View style={styles.textContainer}>
-                <Text style={styles.textBig}>{flipped ? word.translation : word.word}</Text>
-                <Text style={styles.textSmall}>{flipped ? word.type : ""}</Text>
+                <Text 
+                    style={styles.textBig} 
+                    adjustsFontSizeToFit={true} 
+                    numberOfLines={1}
+                >
+                    {flipped ? word.translation : word.word}
+                </Text>
+                <Text style={styles.textSmall}>
+                    {flipped ? word.type : ""}
+                </Text>
             </View>
         </TouchableOpacity>
     );
@@ -41,7 +48,9 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         paddingVertical: 100,
+        paddingHorizontal: 5,
         justifyContent: "center",
         alignItems: "center",
+        
     }
 })
