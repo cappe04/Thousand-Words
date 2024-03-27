@@ -50,7 +50,6 @@ async function getTestWords(table, day){
 
 async function fetchWords(lang, table, day){
     const url = `http://192.168.1.51:5000/lang_api/${lang}?table=${table}`;
-    console.log(url);
     const fetchedData = [];
 
     if(day == undefined){
