@@ -15,7 +15,7 @@ def validate_table(lang, table):
 def bad_request():
     return "Bad Request", 400
 
-@bp.route("/lang_api/<lang>")
+@bp.route("/lang_api/<lang>", methods=["GET"])
 def lang_api(lang):
     # Check if lang exits
     if not validate_lang(lang):
