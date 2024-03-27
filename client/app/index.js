@@ -49,7 +49,7 @@ async function getTestWords(table, day){
 }
 
 async function fetchWords(lang, table, day){
-    const url = `http://127.0.0.1:5000/lang_api/${lang}?table=${table}`; // http://127.0.0.1:5000, http://192.168.1.51:5000
+    const url = `http://192.168.1.51:5000/lang_api/${lang}?table=${table}`;
     console.log(url);
     const fetchedData = [];
 
@@ -87,7 +87,7 @@ const Home = () => {
     const [words, setWords] = useState([]);
 
     const currentLang = "ru"; // load from file or from menu
-    const currentTable = "numbers"; // load from file or from menu
+    const currentTable = "words"; // load from file or from menu
 
     const getData = async () => {
         setIsLoading(true)
