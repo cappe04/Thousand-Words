@@ -40,7 +40,9 @@ export default WordList = ({ words, divided }) => {
                 { 
                     divided && words.map((wordCluster, i) => 
                         <View key={i}>
-                            { i == 0 ? listTitle("Today's words: ", `Day ${wordCluster.day}`): listTitle(`Day ${wordCluster.day}:`) }
+                            { i==0 && listTitle("Today's words: ", `Day ${wordCluster.day}`) }
+                            { i==1 && listTitle("Word's from yesterday: ", `Day ${wordCluster.day}`) }
+                            { i>=2 && listTitle(`Word's from day ${wordCluster.day}:`) }
                             { wordCluster.words.map((word, i) => <WordListItem word={word} key={i}/>) }
                         </View>
                     )

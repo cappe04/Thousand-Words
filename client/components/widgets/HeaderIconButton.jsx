@@ -1,13 +1,13 @@
 import { Image, TouchableOpacity, StyleSheet } from "react-native";
 import { COLORS } from "../../constants";
 
-const HeaderIconButton = ({ icon, dimension, callback }) => {
+const HeaderIconButton = ({ icon, dimension, callback, color }) => {
     return (
         <TouchableOpacity style={styles.container} onPress={callback}>
             <Image
                 source={icon}
                 resizeMode='cover'
-                style={styles.button(dimension)}
+                style={[styles.button(dimension), {tintColor: color}]}
             />
         </TouchableOpacity>
     );
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     container: {
         width: 40,
         height: 40,
-        backgroundColor: COLORS.lightWhite,
         justifyContent: "center",
         alignItems: "center",
     },

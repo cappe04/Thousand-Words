@@ -1,5 +1,5 @@
-import Menu from "./containers/Menu";
 import NavBar from "./containers/NavBar";
+import FlashcardOptions from "./containers/FlashcardOptions";
 
 import HeaderIconButton from "./widgets/HeaderIconButton";
 
@@ -9,8 +9,8 @@ import WordList from "./tabs/WordList";
 
 
 export {
-    Menu,
     NavBar,
+    FlashcardOptions,
 
     HeaderIconButton,
 

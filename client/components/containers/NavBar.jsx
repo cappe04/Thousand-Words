@@ -9,7 +9,7 @@ function createButton(id, text, callback, activeIndex){
     )
 }
 
-const NavBar = ({ tabs, callback, disableIndex }) => {
+const NavBar = ({ tabs, callback, skip }) => {
 
     const [activeIndex, setActiveIndex] = useState(0)
     const scrollRef = useRef();
@@ -36,9 +36,9 @@ const NavBar = ({ tabs, callback, disableIndex }) => {
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} ref={scrollRef}>
             <View style={styles.container}>
             {
-                tabs.map((tab, i) => <NavBarButton 
+                tabs.map((tab, i) => i != skip ? <NavBarButton 
                     key={i} id={i} text={tab} activated={activeIndex==i} callback={onPress}
-                />)
+                />: undefined)
             }
             </View>
         </ScrollView>

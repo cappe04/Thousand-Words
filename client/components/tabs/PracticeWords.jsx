@@ -8,9 +8,17 @@ export default PracticeWords = ({ words }) => {
         return a;
     }, []);
 
+    const ErrorMessage = () => {
+        return (
+            <Text>Day 1 propably!</Text>
+        )
+    }
+
+    if(practiceWords.length == 0) return (<ErrorMessage />)
+
     return (
         <View style={{ paddingTop: 100 }}>
-            { practiceWords.length > 0 ? <FlashcardArea words={practiceWords}/>: <Text>Day 1 propably!</Text> }
+            <FlashcardArea words={practiceWords}/>
         </View>
     )
 }
