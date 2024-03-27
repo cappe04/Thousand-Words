@@ -17,9 +17,11 @@ const FlashcardArea = ({ words }) => {
     const [wordIndex, setWordIndex] = useState(0);
     const [flipped, setFlipped] = useState(false)
 
+    const wordsCopy = [...words];
+
     const onNext = () => {
         if(wordIndex+1 == words.length){
-            words.push(...shuffleArray(words));
+            wordsCopy.push(...shuffleArray(words));
         }
         setWordIndex(wordIndex+1);
     }
@@ -27,7 +29,7 @@ const FlashcardArea = ({ words }) => {
     return (
         <View>
             <View>
-                <Flashcard word={words[wordIndex % words.length]} flipped={flipped} setFlipped={setFlipped}/>
+                <Flashcard word={wordsCopy[wordIndex % words.length]} flipped={flipped} setFlipped={setFlipped}/>
             </View>
             <View style={{
                 display: "flex",
