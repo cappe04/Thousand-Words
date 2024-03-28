@@ -52,7 +52,7 @@ async function fetchWords(lang, table, day){
     const url = `http://192.168.1.51:5000/lang_api/${lang}?table=${table}`;
     const fetchedData = [];
 
-    if(day == undefined){
+    if(day == null){
         const data =  await fetch(url).then(response => response.json());
         fetchedData.push({ day: 0, words: data.map((word) => {
             return { word: word[1], translation: word[2], type: word[3] } 
@@ -86,13 +86,12 @@ const Home = () => {
     const [words, setWords] = useState([]);
 
     const currentLang = "ru"; // load from file or from menu
-    const currentTable = "words"; // load from file or from menu
+    const currentTable = "numbers"; // load from file or from menu
 
     const getData = async () => {
         setIsLoading(true)
         try {
-            const response = await fetchWords(currentLang, currentTable, currentDay);
-            // const response = await getTestWords(currentTable, currentDay);
+            const response = await fetchWords(currentLang, currentTable, currentTable == "words" ? currentDay: null);
             setWords(response);
         } catch (error) {
             console.error(error)
@@ -105,8 +104,6 @@ const Home = () => {
         getData();
         setTab(0);
     }, [currentDay])
-    
-    // const words = getWords(currentWordSet, currentDay); // make web requsest
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
