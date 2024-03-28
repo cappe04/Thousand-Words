@@ -25,25 +25,19 @@ function listTitle(main, second){
     )
 }
 
-export default WordList = ({ words, divided }) => {
-    const flatWords = words.reduce((a, b) => {
-        a.push(...b.words);
-        return a;
-    }, []);
-
+export default WordList = ({ words_or_batch, is_batch, batch_title }) => {
     return (
         <ScrollView style={{
             paddingHorizontal: 10,
         }}>
             <View style={{marginBottom: 50}}>
-                { !divided && flatWords.map((word, i) => <WordListItem word={word} key={i}/>) }
-                { 
-                    divided && words.map((wordCluster, i) => 
+                { !is_batch && words_or_batch.map((word, key) => <WordListItem word={word} key={key}/>) }
+                { is_batch && words_or_batch.map((batch, i) => 
                         <View key={i}>
-                            { i==0 && listTitle("Today's words: ", `Day ${wordCluster.day}`) }
-                            { i==1 && listTitle("Word's from yesterday: ", `Day ${wordCluster.day}`) }
-                            { i>=2 && listTitle(`Word's from day ${wordCluster.day}:`) }
-                            { wordCluster.words.map((word, i) => <WordListItem word={word} key={i}/>) }
+                            { i==0 && listTitle("Today's words: ", `${batch_title} ${batch.id}`) }
+                            { i==1 && listTitle("Words from before: ", `${batch_title} ${batch.id}`) }
+                            { i>=2 && listTitle(`Words from ${batch_title} ${batch.id}:`) }
+                            { batch.words.map((word, key) => <WordListItem word={word} key={key}/>) }
                         </View>
                     )
                 }
