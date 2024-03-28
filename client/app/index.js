@@ -86,12 +86,12 @@ const Home = () => {
     const [words, setWords] = useState([]);
 
     const currentLang = "ru"; // load from file or from menu
-    const currentTable = "numbers"; // load from file or from menu
+    const currentTable = "common"; // load from file or from menu
 
     const getData = async () => {
         setIsLoading(true)
         try {
-            const response = await fetchWords(currentLang, currentTable, currentTable == "words" ? currentDay: null);
+            const response = await fetchWords(currentLang, currentTable, currentTable == "common" ? currentDay: null);
             setWords(response);
         } catch (error) {
             console.error(error)
@@ -116,7 +116,7 @@ const Home = () => {
                     headerRight: () => (
                         <HeaderIconButton icon={icons.OPTIONS} dimension={"60%"} callback={() => {setShowOptions(!showOptions)}}/>
                     ),
-                    headerTitle: currentTable != "words" ? currentTable: `Day ${currentDay}`,
+                    headerTitle: currentTable != "common" ? currentTable: `Day ${currentDay}`,
                 }}
             />
         
@@ -132,18 +132,18 @@ const Home = () => {
                         <NavBar 
                             tabs={["Learn Words", "Practice Words", "Word List"]} 
                             callback={(tab) => { setTab(tab) }} 
-                            skip={currentTable != "words" ? 1: undefined}
+                            skip={currentTable != "common" ? 1: undefined}
                         />
                     </View>
 
                     {tab === 0 && <LearnWords words={words[0]}/>}
                     {tab === 1 && <PracticeWords words={words.slice(1)}/>}
-                    {tab === 2 && <WordList words={words} divided={currentTable == "words"}/>}
+                    {tab === 2 && <WordList words={words} divided={currentTable == "common"}/>}
                         
                 </View>
             )}
             
-            <FlashcardOptions show={showOptions && currentTable == "words"} currentDay={currentDay} setCurrentDay={setCurrentDay}/>
+            <FlashcardOptions show={showOptions && currentTable == "common"} currentDay={currentDay} setCurrentDay={setCurrentDay}/>
         
         </SafeAreaView>
     )
