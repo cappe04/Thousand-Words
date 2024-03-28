@@ -10,11 +10,11 @@ export default LearnWords = ({ words }) => {
         )
     }
 
-    if(words === undefined || words.words.length == 0) return (<ErrorMessage />)
+    if(words.length == 0) return ErrorMessage()
 
     return (
         <View style={{ paddingTop: 100 }}>
-            <FlashcardArea words={words.words}/>
+            <FlashcardArea words={words}/>
         </View>
     )
 }
