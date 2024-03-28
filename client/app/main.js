@@ -84,7 +84,7 @@ const Main = () => {
                 </View>
             )}
             
-            <FlashcardOptions show={showOptions && metadata.formatting.complex} currentDay={currentId} setCurrentDay={setCurrentId}/>
+            <FlashcardOptions show={showOptions && metadata.formatting.complex} currentId={currentId} setCurrentId={setCurrentId} batch_title={metadata.formatting.batch_title?.title}/>
         
         </SafeAreaView>
     )

@@ -3,7 +3,7 @@ import HeaderIconButton from "../widgets/HeaderIconButton";
 import { COLORS, SHADOWS } from "../../constants";
 import icons from "../../constants/icons";
 
-export default FlashcardOptions = ({ show, currentDay, setCurrentDay }) => {
+export default FlashcardOptions = ({ show, currentId, setCurrentId, batch_title }) => {
     if (!show) return
 
     return (
@@ -19,7 +19,7 @@ export default FlashcardOptions = ({ show, currentDay, setCurrentDay }) => {
             }}>
                 <Text style={{
                     fontSize: 20
-                }}>Set day</Text>
+                }}>{`Set ${batch_title}`}</Text>
                 <View style={{
                     flexDirection: "row",
                     backgroundColor: COLORS.lightGray,
@@ -29,14 +29,14 @@ export default FlashcardOptions = ({ show, currentDay, setCurrentDay }) => {
                     marginLeft: 50,
                 }}>
                     <View style={{marginHorizontal: 10}}>
-                        <HeaderIconButton icon={icons.MINUS} dimension={"60%"} color={COLORS.primary} callback={()=>{setCurrentDay(Math.max(currentDay-1, 1))}}/>
+                        <HeaderIconButton icon={icons.MINUS} dimension={"60%"} color={COLORS.primary} callback={()=>{setCurrentId(Math.max(currentId-1, 1))}}/>
                     </View>
                     
                     <Text style={{
                         fontSize: 20
-                    }}>{currentDay}</Text>
+                    }}>{currentId}</Text>
                     <View style={{marginHorizontal: 10}}>
-                        <HeaderIconButton icon={icons.PLUS} color={COLORS.primary} dimension={"60%"} callback={()=>{setCurrentDay(currentDay+1)}}/>
+                        <HeaderIconButton icon={icons.PLUS} color={COLORS.primary} dimension={"60%"} callback={()=>{setCurrentId(currentId+1)}}/>
                     </View>
                 </View>
 
