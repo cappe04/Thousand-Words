@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint, current_app, request
 
-from .db import get_db, get_tables
+from .db import get_db, get_tables, get_metadata
 
 bp = Blueprint("api", __name__)
 
@@ -15,7 +15,11 @@ def validate_table(lang, table):
 def bad_request():
     return "Bad Request", 400
 
-@bp.route("/lang_api/<lang>", methods=["GET"])
+@bp.route("/api/info/metadata", methods=["GET"])
+def lang_metadata():
+    return get_metadata()
+
+@bp.route("/api/lang/<lang>", methods=["GET"])
 def lang_api(lang):
     # Check if lang exits
     if not validate_lang(lang):
