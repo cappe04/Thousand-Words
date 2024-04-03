@@ -1,12 +1,33 @@
 import state from "./state"
 
-export async function loadUserdata(){
-    // maybe load from metadata if not exists, but first load from file
-    state.userdata = {
-        "ru": {
-            "common": {
-                currentId: 5
+const proxy = "../data/"
+
+async function fetchFile(path) {
+    return await fetch(proxy + path)
+}
+
+
+async function loadUserdata(){
+
+    // TODO: try again
+    // const data = await fetchFile("user/userdata.json");
+
+    // console.log(data);
+
+    state.userdata = 
+    {
+        current_lang: "ru",
+    
+        history: {
+            "ru": {
+                "common": {
+                    current_id: 10
+                }
             }
         }
     };
+}
+
+export default {
+    loadUserdata,
 }

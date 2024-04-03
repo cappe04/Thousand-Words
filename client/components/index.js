@@ -7,6 +7,17 @@ import LearnWords from "./tabs/LearnWords";
 import PracticeWords from "./tabs/PracticeWords";
 import WordList from "./tabs/WordList";
 
+import TableList from "./menu/TableList"
+import LangList from "./menu/LangList";
+
+const common = {
+    HeaderIconButton,
+}
+
+const menu = {
+    TableList,
+    LangList,
+}
 
 export {
     NavBar,
@@ -16,5 +27,8 @@ export {
 
     LearnWords,
     PracticeWords,
-    WordList,
+    WordList, 
+    
+    common,
+    menu,
 }

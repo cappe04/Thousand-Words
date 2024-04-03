@@ -63,6 +63,9 @@ async function fetchBaches(lang, table, id){
             }), metadata.formatting.batch_title.title, metadata.formatting.batch_title.index))
     })
     await Promise.all(promises);
+
+    data.sort((a, b) => b.id - a.id)
+
     return data;
 }
 

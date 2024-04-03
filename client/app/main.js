@@ -14,11 +14,12 @@ import api from "../src/api";
 const Main = () => {
     const router = useRouter();
 
-    const { id, table, lang } = useLocalSearchParams();
+    const { table, lang } = useLocalSearchParams();
     const metadata = state.metadata[lang][table];
-    const userdata = state.userdata[lang][table];
+    const user_history = state.userdata.history[lang][table];
 
-    const [currentId, setCurrentId] = useState(parseInt(id)); // load from file
+
+    const [currentId, setCurrentId] = useState(user_history?.current_id ?? 1);
     const [tab, setTab] = useState(0);
     const [showOptions, setShowOptions] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +43,7 @@ const Main = () => {
         getData();
         setTab(0);
         if(metadata.formatting.complex)
-            userdata.currentId = currentId;
+            state.userdata.history[lang][table] = currentId;
     }, [currentId])
 
 

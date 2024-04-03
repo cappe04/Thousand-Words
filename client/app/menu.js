@@ -1,11 +1,18 @@
 import { useRouter, Stack } from "expo-router"
-import { Pressable, Text, View, SafeAreaView, ScrollView } from "react-native";
+import { Pressable, Text, View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 
 import state from "../src/state";
 import { COLORS } from "../constants";
+import { common } from "../components";
+import icons from "../constants/icons";
+import { menu } from "../components"
+import { useEffect, useState } from "react";
+import { iso_639_1 } from "iso-639";
 
 export default Menu = () => {
     const router = useRouter();
+
+    const [currentLang, setCurrentLang] = useState(state.userdata.current_lang);
 
     return (
         <SafeAreaView style={{ backgroundColor: COLORS.lightWhite, flex: 1 }}>
@@ -14,34 +21,39 @@ export default Menu = () => {
                     headerTitle: "Menu",
                     headerStyle: {
                         backgroundColor: COLORS.lightWhite,
-                    }
+                    },
+                    headerRight: () => (
+                        <common.HeaderIconButton icon={icons.OPTIONS} dimension={"60%"} callback={() => {
+                            setCurrentLang(null)
+                        }}/>
+                    )
                 }}
             />
 
-            <ScrollView>
-                { Object.keys(state.metadata["ru"]).map((table, key) => {
-                    return <Pressable onPress={() => {
-                        router.push({
+            { currentLang == null ? (
+                <View style={{ alignItems: "center" }}>
+                    <Text style={{ fontSize: 25, padding: 10, }}>
+                        {"Select Language"}
+                    </Text>
+                    <menu.LangList langs={state.metadata} callback={setCurrentLang}/>
+                </View>
+            ) : (
+                <View style={{ alignItems: "center" }}>
+                    <Text style={{ fontSize: 25, padding: 10, }}>
+                        {`Select Course [${iso_639_1[currentLang].nativeName}]`}
+                    </Text>
+                    <menu.TableList 
+                        tables={state.metadata[currentLang]} 
+                        callback={(tablename) => router.push({
                             pathname: "/main",
                             params: {
-                                lang: "ru",
-                                table: table,
-                                id: state.metadata["ru"][table].formatting.complex ? state.userdata["ru"][table].currentId: 0
+                                lang: currentLang,
+                                table: tablename
                             }
-                        })
-                    }} style={{
-                        alignItems: "center",
-                        padding: 10,
-                        backgroundColor: COLORS.lightGray,
-                        borderColor: COLORS.gray2,
-                        borderBottomWidth: 1,
-                    }} key={key}>
-                        <Text>{state.metadata["ru"][table].title}</Text>
-                    </Pressable>
-                })
-
-                }
-            </ScrollView>
+                        })}
+                    />
+                </View>
+            )}
         </SafeAreaView>
     )
 }
