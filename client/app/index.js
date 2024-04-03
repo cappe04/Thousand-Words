@@ -1,10 +1,10 @@
 import { Redirect, Stack } from "expo-router";
-import { loadUserdata } from "../src/data";
 import { useEffect, useState } from "react";
 import { SafeAreaView, ActivityIndicator, View, Text } from "react-native";
 import { COLORS } from "../constants";
 
 import api from "../src/api";
+import data from "../src/data";
 
 const OnLoad = () => {
     
@@ -13,7 +13,7 @@ const OnLoad = () => {
     const loadData = async () => {
         try {
             await api.loadMetadata();
-            await loadUserdata();
+            await data.loadUserdata();
         } catch (error) {
             console.log(error);
         } finally {
