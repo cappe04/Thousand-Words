@@ -18,7 +18,7 @@ export default Menu = () => {
         <SafeAreaView style={{ backgroundColor: COLORS.lightWhite, flex: 1 }}>
             <Stack.Screen 
                 options={{
-                    headerTitle: "Menu",
+                    headerTitle: "Menu 2",
                     headerStyle: {
                         backgroundColor: COLORS.lightWhite,
                     },
