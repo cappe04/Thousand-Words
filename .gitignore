@@ -14,7 +14,17 @@ client/ios-v1.0.0/*.mobileprovision
 client/ios-v1.0.0/*.orig.*
 client/ios-v1.0.0/web-build/
 
-client/ios-v2.0.0/*
+client/ios-v2.0.0/node_modules/
+client/ios-v2.0.0/.expo/
+client/ios-v2.0.0/dist/
+client/ios-v2.0.0/npm-debug.*
+client/ios-v2.0.0/*.jks
+client/ios-v2.0.0/*.p8
+client/ios-v2.0.0/*.p12
+client/ios-v2.0.0/*.key
+client/ios-v2.0.0/*.mobileprovision
+client/ios-v2.0.0/*.orig.*
+client/ios-v2.0.0/web-build/
 
 
 .env
