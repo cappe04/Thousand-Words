@@ -6,7 +6,7 @@ export default function ErrorMessage({ type, message }){
     return (
         <View style={styles.container}>
             <Image source={icons.error} style={styles.image}/>
-            <Text style={[text.smallBold, { paddingBottom: 5 }]}>{ type }</Text>
+            <Text style={[text.makeBold(text.small), { paddingBottom: 5 }]}>{ type }</Text>
             <Text style={text.small}>{ message }</Text>
         </View>
     )
