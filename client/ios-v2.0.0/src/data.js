@@ -1,5 +1,6 @@
 // Loads data stored locally
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import state from './state';
 
 /*
 
@@ -21,6 +22,10 @@ export async function initStorage(){
     }
 
     await createIfNull("history", JSON.stringify({}));
+    
+    // Load into memory
+    state.history = await AsyncStorage.getItem("history");
+    state.currentLang = await AsyncStorage.getItem("currentLang");
 }
 
 export async function flushStorage(){
@@ -29,25 +34,31 @@ export async function flushStorage(){
     await initStorage();
 }
 
-export async function getHistory(lang, table){
-    const history = JSON.parse(await AsyncStorage.getItem("history"));
-    return history[lang]?.[table];
+export function getHistory(lang, table){
+    return state.history[lang]?.[table];
 }
 
-export async function updateHistory(lang, table, id){
-    const history = JSON.parse(await AsyncStorage.getItem("history"));
-    
-    if(history[lang] == undefined)
-        history[lang] = {}
-    
-    history[lang][table] = id
-
-    await AsyncStorage.setItem("history", JSON.stringify(history));
+export function setHistory(lang, table, id){
+    state.history[lang] ??= {}
+    state.history[lang][table] = id;
 }
 
-export async function getCurrentLang(){
-    return await AsyncStorage.getItem("currentLang");
+// export async function getHistory(lang, table){
+//     const history = JSON.parse(await AsyncStorage.getItem("history"));
+//     return history[lang]?.[table];
+// }
+
+export async function updateHistory(){
+    await AsyncStorage.setItem("history", JSON.stringify(state.history));
 }
-export async function setCurrentLang(lang){
-    return await AsyncStorage.setItem("currentLang", lang);
+
+export async function updateCurrentLang(){
+    await AsyncStorage.setItem("currentLang", state.currentLang);
 }
+
+// export async function getCurrentLang(){
+//     return await AsyncStorage.getItem("currentLang");
+// }
+// export async function setCurrentLang(lang){
+//     return await AsyncStorage.setItem("currentLang", lang);
+// }
