@@ -1,3 +1,4 @@
+import { Redirect } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { SafeAreaView, StatusBar, Text, View } from "react-native";
 
@@ -5,9 +6,9 @@ import * as SplashScreen from "expo-splash-screen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { setMetadata } from "../src/api";
-import { initStorage } from "../src/data";
+import { flushStorage, initStorage } from "../src/data";
 import { ErrorMessage } from "../components";
-import { colors } from "../constants";
+import { colors, container } from "../constants";
 
 export default Index = () => {
 
@@ -20,6 +21,7 @@ export default Index = () => {
                 // Init Data
                 await setMetadata();
                 await initStorage();
+                await flushStorage(); // clear database
     
                 // Logs storage, temporary
                 const storageKeys = await AsyncStorage.getAllKeys();
@@ -49,15 +51,15 @@ export default Index = () => {
         return null;
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg, justifyContent: "center" }} onLayout={onLayoutRootView}>
+        <SafeAreaView style={[container.safe]} onLayout={onLayoutRootView}>
             <StatusBar hidden={false} barStyle={"light-content"}/>
             
             { errorObject.didFail ? (
+                <View style={{ justifyContent: "center", flex: 1, }}>
                 <ErrorMessage type={errorObject.type} message={errorObject.message}></ErrorMessage>
-            ) : /* should be router.replace */(
-                <View>
-                    <Text>Loaded Correctly</Text>
                 </View>
+            ) : /* if not error goto menu */(
+                <Redirect href={"/menu"}/>
             ) }
         </SafeAreaView>
     )
