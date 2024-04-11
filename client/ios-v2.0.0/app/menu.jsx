@@ -1,4 +1,5 @@
 import { SafeAreaView, Text, View } from "react-native";
+import { useRouter } from "expo-router"
 
 import { colors, container, text } from "../constants";
 import { DropDown, MenuTableList } from "../components";
@@ -23,6 +24,7 @@ export default function Menu(){
         })
     }
     
+    const router = useRouter();
     const [currentLangString, setCurrentLangString] = useState(state.currentLang == null ? null: getLangString(state.currentLang));
     const [tableItems, setTableItems] = useState(getCurrentTabels());
 
@@ -34,7 +36,14 @@ export default function Menu(){
         <SafeAreaView style={container.safe}>
             
             <View style={{top: "50%"}}>
-                <MenuTableList items={tableItems} callback={table => console.log(table)}/>
+                <MenuTableList items={tableItems} callback={table => router.push(
+                    {
+                        pathname: "/flashcard",
+                        params: {
+                            table: table,
+                        }
+                    }
+                )}/>
             </View>
             <View style={{top: "-90%"}}>
                 <View style={{alignItems: "center"}}>
