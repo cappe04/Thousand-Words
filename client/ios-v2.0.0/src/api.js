@@ -2,7 +2,7 @@
 import { HOST, PORT } from "@env"
 import state from "./state";
 
-const proxy = `http://192.168.1.51:5000/api/`; //`http://${HOST}:${PORT}/api/`
+const proxy = `http://${HOST}:${PORT}/api/`;// `http://192.168.1.51:5000/api/`; //`http://${HOST}:${PORT}/api/`
 
 class Word {
     constructor(word, translation, type){
@@ -22,13 +22,7 @@ class Batch {
 }
 
 async function fetchData(url){
-    return await fetch(proxy + url).then(res => {
-        try {
-            return res.json()
-        } catch {
-            return res
-        }
-    });
+    return await fetch(proxy + url).then(res => res.json());
 }
 
 export async function setMetadata(){
