@@ -1,38 +1,64 @@
-import { useEffect, useState } from "react";
-import { SafeAreaView, Text, View } from "react-native";
-import { fetchTable, fetchBatches, setMetadata } from "../src/api";
-import state from "../src/state";
+import { useCallback, useEffect, useState } from "react";
+import { SafeAreaView, StatusBar, Text, View } from "react-native";
+
+import * as SplashScreen from "expo-splash-screen";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { setMetadata } from "../src/api";
+import { initStorage } from "../src/data";
+import { ErrorMessage } from "../components";
+import { colors } from "../constants";
 
 export default Index = () => {
 
-    const [data, setData] = useState(null);
-
-    const loadData = async () => {
-        try {
-            await setMetadata()
-            const data = await fetchBatches("ru", "common", 1, state.metadata.langs.ru.tables.common.formatting);
-            setData(data);
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    const [appIsReady, setAppIsReady] = useState(false);
+    const [errorObject, setErrorObject] = useState({ didFail: false, type: "", message: "" });
 
     useEffect(() => {
-        loadData();
+        async function prepare() {
+            try {
+                // Init Data
+                await setMetadata();
+                await initStorage();
+    
+                // Logs storage, temporary
+                const storageKeys = await AsyncStorage.getAllKeys();
+                storageKeys.forEach(async key => console.info(`${key}: ${await AsyncStorage.getItem(key)}`));
+
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            } catch (error) {
+                setErrorObject({
+                    didFail: true,
+                    type: error.name,
+                    message: error.message
+                });
+            } finally {
+                setAppIsReady(true);
+            }
+        }
+
+        prepare();
     }, []);
+    const onLayoutRootView = useCallback(async () => {
+        if(appIsReady){
+            await SplashScreen.hideAsync();
+        }
+    }, [appIsReady])
+
+    if(!appIsReady) 
+        return null;
 
     return (
-        <SafeAreaView>
-            <Text>Hello, World!</Text>
-            { data == null ? (
+        <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg, justifyContent: "center" }} onLayout={onLayoutRootView}>
+            <StatusBar hidden={false} barStyle={"light-content"}/>
+            
+            { errorObject.didFail ? (
+                <ErrorMessage type={errorObject.type} message={errorObject.message}></ErrorMessage>
+            ) : /* should be router.replace */(
                 <View>
-                    <Text>NULL</Text>
+                    <Text>Loaded Correctly</Text>
                 </View>
-            ) : 
-                data[0].words.map((item, i) => <View key={i}>
-                    <Text>{item.word}</Text>
-                </View>)
-            }
+            ) }
         </SafeAreaView>
     )
 }
