@@ -1,5 +1,5 @@
 import icons from "./icons"
-import { colors } from "./theme"
+import { colors, shadows } from "./theme"
 import { text, container } from "./presets"
 
 export {
@@ -7,4 +7,5 @@ export {
     colors,
     text,
     container,
+    shadows,
 }

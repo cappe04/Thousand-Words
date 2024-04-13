@@ -12,11 +12,36 @@ const colors = {
         this.background = this.bg;
 
         this.highlight = this.hl;
+        
+        this.shadow = this.sd;
         return this;
     }
 
 }.makeAliases()
 
+const shadows = {
+    small: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 2,
+    }, 
+    smallTop: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: -4,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 4,
+    }, 
+}
+
 export {
-    colors
+    colors, shadows
 }
