@@ -21,7 +21,7 @@ export default Index = () => {
                 // Init Data
                 await setMetadata();
                 await initStorage();
-                await flushStorage(); // clear database
+                // await flushStorage(); // clear local data
     
                 // Logs storage, temporary
                 const storageKeys = await AsyncStorage.getAllKeys();
@@ -56,7 +56,7 @@ export default Index = () => {
             
             { errorObject.didFail ? (
                 <View style={{ justifyContent: "center", flex: 1, }}>
-                <ErrorMessage type={errorObject.type} message={errorObject.message}></ErrorMessage>
+                <ErrorMessage type={errorObject.type} message={errorObject.message} />
                 </View>
             ) : /* if not error goto menu */(
                 <Redirect href={"/menu"}/>
