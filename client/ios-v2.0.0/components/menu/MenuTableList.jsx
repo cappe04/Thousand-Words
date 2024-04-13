@@ -17,7 +17,7 @@ export default function MenuTableList({ items, callback }){
     return (
         <View>
             <View style={{ paddingLeft: 24, marginBottom: 5, }}>
-                <Text style={text.makeBold(text.small)}>Available Course:</Text>
+                <Text style={text.makeBold(text.small)}>Available Courses:</Text>
             </View>
             <ScrollView style={styles.scrollView}>
                 { items == null ? (
