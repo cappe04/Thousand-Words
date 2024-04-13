@@ -16,6 +16,11 @@ const text = {
         color: colors.default_text,
     },
 
+    extraLarge: {
+        fontSize: 48,
+        color: colors.default_text,
+    },
+
     mediumBlack: {
         fontSize: 24,
     },
@@ -36,6 +41,10 @@ const container = {
     safe: {
         flex: 1,
         backgroundColor: colors.bg,
+    },
+    safeDark: {
+        flex: 1,
+        backgroundColor: colors.sd,
     }
 }
 
