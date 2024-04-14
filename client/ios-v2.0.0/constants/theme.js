@@ -39,7 +39,17 @@ const shadows = {
         shadowOpacity: 0.1,
         shadowRadius: 2,
         elevation: 4,
-    }, 
+    },
+    medium: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 5.84,
+        elevation: 5,
+    },
 }
 
 export {
