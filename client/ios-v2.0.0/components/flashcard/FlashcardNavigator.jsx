@@ -57,7 +57,7 @@ export default function FlashcardNavigator(){
                 </Pressable>
                 <Pressable style={styles.navigatorShow} onPress={() => { setCardHidden(!cardHidden) }}>
                     <Text style={text.large}>
-                        Reveal
+                        {cardHidden ? "Reveal": "Hide"}
                     </Text>
                 </Pressable>
                 <Pressable onPress={right} style={styles.navigatorArrow}>
@@ -136,5 +136,4 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: colors.hl,
     },
-
 })
