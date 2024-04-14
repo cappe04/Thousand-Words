@@ -13,7 +13,7 @@ export default function Menu(){
     const getLangString = (lang) => {
         const native = state.metadata.langs[lang].meta.native;
         const en = state.metadata.langs[lang].meta.en;
-        return `${native} (${en})`;
+        return `${native} [${en}]`;
     }
 
     const getCurrentTabels = () => {
