@@ -1,13 +1,18 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { colors } from "../../constants";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 
 function NavBarItem({ title, selected, _key, onSelect }) {
 
+    let width = 0;
+
+    const onLayout = (event) => {
+        width = event.nativeEvent.layout.width;
+    }
 
     return (
-        <Pressable style={styles.itemContainer(selected)} onPress={() => onSelect(_key)}>
+        <Pressable onLayout={onLayout} style={styles.itemContainer(selected)} onPress={() => onSelect(_key, width)}>
             <Text style={styles.itemText(selected)}>{title}</Text>
         </Pressable>
     )
@@ -16,15 +21,24 @@ function NavBarItem({ title, selected, _key, onSelect }) {
 export default function NavBar({ items, callback }) {
 
     const [selectedKey, setSelectedKey] = useState(items[0].key);
+    const scrollRef = useRef();
+    
+    const onSelect = (key, itemWidth) => {
+        if(key == selectedKey) return;
+        
+        // Scroll to clicked item
+        scrollRef.current.scrollTo({
+            x: itemWidth * items.findIndex(item => item.key == key),
+            animated: true,
+        })
 
-    const onSelect = key => {
         setSelectedKey(key);
         callback(key);
     }
 
     return (
         <View>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} ref={scrollRef}>
                 { items.map(item => <NavBarItem 
                     title={item.value}
                     selected={item.key == selectedKey}
