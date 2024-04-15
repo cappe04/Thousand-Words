@@ -1,6 +1,10 @@
 import { colors } from "./theme"
 
 const text = {
+    extraSmall: {
+        fontSize: 12,
+        color: colors.default_text,
+    },
     small: {
         fontSize: 16,
         color: colors.default_text,
