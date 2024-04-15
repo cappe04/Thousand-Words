@@ -24,7 +24,7 @@ export async function initStorage(){
     await createIfNull("history", JSON.stringify({}));
     
     // Load into memory
-    state.history = await AsyncStorage.getItem("history");
+    state.history = JSON.parse(await AsyncStorage.getItem("history"));
     state.currentLang = await AsyncStorage.getItem("currentLang");
 }
 
@@ -39,7 +39,7 @@ export function getHistory(lang, table){
 }
 
 export function setHistory(lang, table, id){
-    state.history[lang] ??= {}
+    state.history[lang] ??= {};
     state.history[lang][table] = id;
 }
 
