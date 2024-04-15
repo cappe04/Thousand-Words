@@ -25,11 +25,11 @@ export default function FlashcardNavigator({ batch, batches }){
         rotation.setValue(0);
     }
     
-    Animated.timing(rotation, { toValue: !cardHidden, useNativeDriver: true, duration: 250 }).start();
+    Animated.timing(rotation, { toValue: !cardHidden, useNativeDriver: true, duration: 200 }).start();
 
 
     if(batches != undefined && batches.length == 0){
-        return (<ErrorMessage type={"There is nothing here yet!"} message={"You haven't got anything to repeat yet. If you wan't to manualy progress you kan change the level in Settings."} />)
+        return (<ErrorMessage type={"There is nothing here yet!"} message={"You haven't got anything to repeat yet. If you want to manualy progress you kan change the level in Settings."} />)
     }
 
     return (
@@ -41,9 +41,14 @@ export default function FlashcardNavigator({ batch, batches }){
                     </Text>
                 </Animated.View>
                 <Animated.View style={styles.cardAnimated(false, rotation)}>
-                    <Text style={[text.extraLarge, { color: colors.hl, fontWeight: "500" }]}>
+                    <Text style={styles.cardTranslationText}>
                         {words[count%words.length].translation}
                     </Text>
+                    <View style={{ paddingHorizontal: "5%" }}>    
+                        <Text style={[text.small, { color: colors.hl }]}>
+                            {words[count%words.length].type}
+                        </Text>
+                    </View>
                 </Animated.View>
             </Pressable>
 
@@ -76,14 +81,15 @@ const styles = StyleSheet.create({
         marginTop: "10%",
     },
     cardAnimated: (front, rotation) => ({
+        position: "absolute",
         alignItems: "center",
         justifyContent: "center",
         width: "90%",
         height: "100%",
+        paddingHorizontal: "5%",
+        marginHorizontal: "5%",
         backgroundColor: front ? colors.sd: colors.fg,
         borderRadius: "30%",
-        marginHorizontal: "5%",
-        position: "absolute",
         borderWidth: 1,
         borderColor: front ? colors.sd: colors.hl, 
         ...shadows.small,
@@ -100,6 +106,20 @@ const styles = StyleSheet.create({
         ] 
 
     }),
+    cardTranslationText: {
+        ...text.large,
+        color: colors.hl,
+        fontWeight: "500",
+        textAlign: "center",
+    },
+    cardTypeContainer: {
+        paddingHorizontal: "5%",
+    },
+    cardTypeText: {
+        ...text.small,
+        color: colors.hl,
+        textAlign: "center",
+    },
     navigatorContainer: {
         height: "25%",
         backgroundColor: colors.sd,
