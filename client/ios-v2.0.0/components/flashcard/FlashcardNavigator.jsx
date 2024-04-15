@@ -1,26 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { Animated, Image, Pressable, StyleSheet, Text, View } from "react-native";
+
 import { colors, text, icons, shadows } from "../../constants";
 
-export default function FlashcardNavigator(){
+import ErrorMessage from "../common/ErrorMessage";
+
+export default function FlashcardNavigator({ batch, batches }){
 
     const rotation = useRef(new Animated.Value(0)).current;
+    const words = batches === undefined ? batch.words: batches.reduce((a, b) => a.push(b.words), []);
 
     const [count, setCound] = useState(0);
     const [cardHidden, setCardHidden] = useState(true);
-    
-    const words = [
-        "Galoboj",
-        "Pidar",
-        "Boogie Gomosexual",
-        "Pidaras",
-    ];
-    const meanings = [
-        "Ljusblå",
-        "Gay",
-        "Boogie är gay",
-        "Gay",
-    ];
 
     const left = () => {
         setCound(count - 1 >= 0 ? count - 1: 0);
@@ -36,17 +27,22 @@ export default function FlashcardNavigator(){
     
     Animated.timing(rotation, { toValue: !cardHidden, useNativeDriver: true, duration: 250 }).start();
 
+
+    if(batches != undefined && batches.length == 0){
+        return (<ErrorMessage type={"There is nothing here yet!"} message={"You haven't got anything to repeat yet. If you wan't to manualy progress you kan change the level in Settings."} />)
+    }
+
     return (
         <View style={styles.mainContainer}>
             <Pressable style={styles.cardContainer} onPress={() => { setCardHidden(!cardHidden) }}>
                 <Animated.View style={styles.cardAnimated(true, rotation)}>
                     <Text style={text.extraLarge}>
-                        {words[count%words.length]}
+                        {words[count%words.length].word}
                     </Text>
                 </Animated.View>
                 <Animated.View style={styles.cardAnimated(false, rotation)}>
                     <Text style={[text.extraLarge, { color: colors.hl, fontWeight: "500" }]}>
-                        {meanings[count%meanings.length]}
+                        {words[count%words.length].translation}
                     </Text>
                 </Animated.View>
             </Pressable>
