@@ -46,7 +46,7 @@ export default function FlashcardWordList({ batches }){
                 // borderBottomRightRadius: 10,
             }}>
                 <Text style={text.extraLarge}>Wordbook</Text>
-                <Text style={text.small}>All the words available in both the New Words tab and the Repeat Words tab will able to be seen here. Altough it's still recomended to practice them through the other tabs.</Text>
+                <Text style={text.small}>All the words available in both the New Words tab and the Repeat Words tab will be shown here.</Text>
             </View>
             <ScrollView bounces={false}>
                 { words.map((word, key) => <Item word={word} key={key}/>) }
