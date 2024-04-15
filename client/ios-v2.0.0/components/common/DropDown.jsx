@@ -6,7 +6,7 @@ function Item({ message, onPress, id }) {
     return (
         <Pressable style={styles.itemContainer} onPress={() => onPress(id)}>
             <Text style={[text.medium, { color: colors.bg, fontWeight: "300", }]} numberOfLines={1}>
-                {message + " " + "...".repeat(100)}
+                {message + "...".repeat(30)}
             </Text>
         </Pressable>
     )
