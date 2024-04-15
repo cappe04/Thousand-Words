@@ -3,14 +3,14 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { Pressable, SafeAreaView, Text, View, Image, ScrollView } from "react-native";
 
 import { colors, container, icons, shadows, text } from "../constants";
-import { ErrorMessage, FlashcardNavigator, NavBar } from "../components";
+import { ErrorMessage, FlashcardNavigator, FlashcardWordList, NavBar } from "../components";
 
 import state from "../src/state";
 import { setHistory, getHistory, updateHistory } from "../src/data";
 import { fetchBatches } from "../src/api";
 
 export default function Flashcard() {
-
+    // TODO: be able to read non-complex tables.
     const router = useRouter();
     const { table } = useLocalSearchParams();
 
@@ -50,7 +50,7 @@ export default function Flashcard() {
             <Stack.Screen options={{
                 headerShown: true,
                 headerShadowVisible: false,
-                headerTitle: "Day 1",
+                headerTitle: "Day 1", // TODO: Use metadata formatting.
                 headerTintColor: colors.fg,
                 headerLeft: () => (
                     <Pressable onPress={router.back}>
@@ -77,13 +77,13 @@ export default function Flashcard() {
                     <View style={{ backgroundColor: colors.bg, paddingTop: 10 }}>
                         <NavBar items={[
                             { key: 0, value: "New Words" },
-                            { key: 1, value: "Repeat Words" },
+                            { key: 1, value: "Repeat Words" }, // TODO: turn of if not complex
                             { key: 2, value: "Wordbook" },
                         ]} callback={key => {setCurrentTabKey(key)}} />
                     </View>
                     { hasLoaded && currentTabKey == 0 && <FlashcardNavigator batch={wordBatches[0]}/> }
                     { hasLoaded && currentTabKey == 1 && <FlashcardNavigator batches={wordBatches.slice(1)}/> }
-                    { hasLoaded && currentTabKey == 2 && <View><Text>Shit</Text></View> }
+                    { hasLoaded && currentTabKey == 2 && <FlashcardWordList batches={wordBatches}/> }
                 </View>
             )}
         </SafeAreaView>                
