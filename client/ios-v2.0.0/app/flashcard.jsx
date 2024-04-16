@@ -7,7 +7,7 @@ import { ErrorMessage, FlashcardNavigator, FlashcardWordList, NavBar } from "../
 
 import state from "../src/state";
 import { setHistory, getHistory, updateHistory } from "../src/data";
-import { fetchBatches } from "../src/api";
+import { fetchBatch, fetchBatches } from "../src/api";
 
 export default function Flashcard() {
     // TODO: be able to read non-complex tables.
@@ -15,6 +15,7 @@ export default function Flashcard() {
     const { table } = useLocalSearchParams();
 
     const metadata = state.metadata.langs[state.currentLang].tables[table];
+    const complex = metadata.formatting.complex;
 
     const [currentId, setCurrentId] = useState(getHistory(state.currentLang, table) ?? 1);
     const [wordBatches, setWordBatches] = useState([]);
@@ -24,44 +25,61 @@ export default function Flashcard() {
         didFail: false,
     })
     
-    useEffect(() => {
-        async function onUpdate(){
-            try{
-                setHistory(state.currentLang, table, currentId);
-                await updateHistory();
-                const data = await fetchBatches(state.currentLang, table, currentId, metadata.formatting);
-                setWordBatches(data);
-            } catch (error){
-                setErrorObject({
-                    didFail: true,
-                    type: error.name,
-                    message: error.message
-                });
-            } finally {
-                setHasLoaded(true);
-            }
+    function getTitle(){
+        if(!complex) return metadata.title;
+        const { title, index } = metadata.formatting.batch_title;
+        return title + (index ? ` ${currentId}`: "");
+    }
+
+    async function getData(){
+        if(!complex) return [await fetchBatch(state.currentLang, table)];
+        return await fetchBatches(state.currentLang, table, currentId, metadata.formatting);
+    }
+
+    async function onUpdate(){
+        try{
+            setHistory(state.currentLang, table, currentId);
+            await updateHistory();
+            const data = await getData(); 
+            setWordBatches(data);
+        } catch (error){
+            setErrorObject({
+                didFail: true,
+                type: error.name,
+                message: error.message
+            });
+        } finally {
+            setHasLoaded(true);
         }
+    }
+
+    useEffect(() => {
         onUpdate();
     }, [currentId]);
     
+    const navBarItems = [
+        { key: 0, value: "New Words" },
+        { key: 2, value: "Wordbook" },
+    ];
+    if(complex) navBarItems.splice(1, 0, { key: 1, value: "Repeat Words" });
     
     return (
         <SafeAreaView style={container.safeDark}>
             <Stack.Screen options={{
                 headerShown: true,
                 headerShadowVisible: false,
-                headerTitle: "Day 1", // TODO: Use metadata formatting.
+                headerTitle: getTitle(),
                 headerTintColor: colors.fg,
                 headerLeft: () => (
-                    <Pressable onPress={router.back}>
+                    <Pressable onPress={() => router.replace("/menu")}>
                         <Image source={icons.menu} tintColor={colors.fg} style={{ width: 30, height: 30 }}/>
                     </Pressable>
                 ),
-                headerRight: () => /* maybe not, find better integration for day change */(
-                    <Pressable onPress={() => router.push("/settings")}>
+                headerRight: () => { if(complex) return (
+                    <Pressable onPress={() => router.push({ pathname: "/flashcard_settings", params: { table: table }})}>
                         <Image source={icons.settings} tintColor={colors.fg} style={{ width: 30, height: 30 }}/>
                     </Pressable>
-                ),
+                )},
                 headerStyle: {
                     backgroundColor: colors.bg,
                 },
@@ -75,11 +93,7 @@ export default function Flashcard() {
             ) : (
                 <View style={{ flex: 1, }}>    
                     <View style={{ backgroundColor: colors.bg, paddingTop: 10 }}>
-                        <NavBar items={[
-                            { key: 0, value: "New Words" },
-                            { key: 1, value: "Repeat Words" }, // TODO: turn of if not complex
-                            { key: 2, value: "Wordbook" },
-                        ]} callback={key => {setCurrentTabKey(key)}} />
+                        <NavBar items={navBarItems} callback={key => {setCurrentTabKey(key)}} />
                     </View>
                     { hasLoaded && currentTabKey == 0 && <FlashcardNavigator batch={wordBatches[0]}/> }
                     { hasLoaded && currentTabKey == 1 && <FlashcardNavigator batches={wordBatches.slice(1)}/> }
