@@ -1,4 +1,4 @@
-import { Redirect } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { SafeAreaView, StatusBar, Text, View } from "react-native";
 
@@ -58,9 +58,9 @@ export default Index = () => {
                 <View style={{ justifyContent: "center", flex: 1, }}>
                 <ErrorMessage type={errorObject.type} message={errorObject.message} />
                 </View>
-            ) : /* if not error goto menu */(
-                <Redirect href={"/menu"}/>
-            ) }
+            ) : /* if not error goto menu */
+                router.push("/menu")
+            }
         </SafeAreaView>
     )
 }
