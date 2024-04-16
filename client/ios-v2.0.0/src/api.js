@@ -38,6 +38,11 @@ export async function fetchTable(lang, table, intervall=undefined){
     return data.map((item) => new Word(item[1], item[2], item[3]));
 }
 
+export async function fetchBatch(lang, table){
+    const words = await fetchTable(lang, table);
+    return new Batch(null, words, null, null);
+}
+
 export async function fetchBatches(lang, table, id, formatting){
     const data = []
 
