@@ -25,15 +25,10 @@ function Item({ word }){
 }
 
 export default function FlashcardWordList({ batches }){
-    let words;
-    if(batches.length == 1){
-
-        words = batches[0].words;
-    }
-    else{
-
-        words = batches.reduce((a, b) => a.push(b.words), []);
-    }
+    const words = batches.reduce((a, b) => {
+        a.push(...b.words);
+        return a;
+    }, []);
 
     return (
         <SafeAreaView style={container.safeDark}>
@@ -42,8 +37,6 @@ export default function FlashcardWordList({ batches }){
                 padding: 10,
                 borderBottomWidth: 1,
                 borderColor: colors.fg,
-                // borderBottomLeftRadius: 10,
-                // borderBottomRightRadius: 10,
             }}>
                 <Text style={text.extraLarge}>Wordbook</Text>
                 <Text style={text.small}>All the words available in both the New Words tab and the Repeat Words tab will be shown here.</Text>

@@ -8,7 +8,10 @@ import ErrorMessage from "../common/ErrorMessage";
 export default function FlashcardNavigator({ batch, batches }){
 
     const rotation = useRef(new Animated.Value(0)).current;
-    const words = batches === undefined ? batch.words: batches.reduce((a, b) => a.push(b.words), []);
+    const words = batches === undefined ? batch.words: batches.reduce((a, b) => {
+        a.push(...b.words);
+        return a;
+    }, []);
 
     const [count, setCound] = useState(0);
     const [cardHidden, setCardHidden] = useState(true);
