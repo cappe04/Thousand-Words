@@ -21,13 +21,7 @@ export default Index = () => {
                 // Init Data
                 await setMetadata();
                 await initStorage();
-                // await flushStorage(); // clear local data
-    
-                // Logs storage, temporary
-                const storageKeys = await AsyncStorage.getAllKeys();
-                storageKeys.forEach(async key => console.info(`${key}: ${await AsyncStorage.getItem(key)}`));
 
-                await new Promise(resolve => setTimeout(resolve, 1000));
             } catch (error) {
                 setErrorObject({
                     didFail: true,
