@@ -4,8 +4,10 @@ const colors = {
     hl: "#F05454", // rgb(240, 84, 84)
     sd: "#20344a",
     // #222831 rgb(34, 40, 49)
-
-    makeAliases: function() {
+    gray: "#C1C0C8",
+    gray2: "#83829A",
+    
+    __makeAliases: function() {
         this.foreground = this.fg;
         this.default_text = this.fg;
 
@@ -17,7 +19,7 @@ const colors = {
         return this;
     }
 
-}.makeAliases()
+}.__makeAliases()
 
 const shadows = {
     small: {
