@@ -1,7 +1,7 @@
-import { SafeAreaView, Text, View } from "react-native";
-import { useRouter } from "expo-router"
+import { Pressable, SafeAreaView, Text, View, Image, StyleSheet } from "react-native";
+import { Stack, useRouter } from "expo-router"
 
-import { colors, container, text } from "../constants";
+import { colors, container, text, icons } from "../constants";
 import { DropDown, MenuTableList } from "../components";
 import state from "../src/state";
 import { updateCurrentLang } from "../src/data";
@@ -34,10 +34,22 @@ export default function Menu(){
 
     return (
         <SafeAreaView style={container.safe}>
-            
-            <View style={{top: "50%"}}>
-                <MenuTableList items={tableItems} callback={table => router.push(
-                    {
+            <Stack.Screen options={{
+                headerShown: true,
+                headerShadowVisible: false,
+                headerTitle: "",
+                headerBackVisible: false,
+                headerStyle: {
+                    backgroundColor: colors.bg,
+                },
+                headerRight: () => (
+                    <Pressable onPress={() => router.push("/settings")}>
+                        <Image source={icons.settings} tintColor={colors.fg} style={{ width: 30, height: 30 }}/>
+                    </Pressable>
+                )
+            }} />
+            <View style={styles.tableContainer}>
+                <MenuTableList items={tableItems} callback={table => router.push({
                         pathname: "/flashcard",
                         params: {
                             table: table,
@@ -45,11 +57,11 @@ export default function Menu(){
                     }
                 )}/>
             </View>
-            <View style={{top: "-90%"}}>
-                <View style={{alignItems: "center"}}>
-                    <Text style={[text.medium, { padding: 10 }]}>Selected Language:</Text>
+            <View style={styles.langContainer}>
+                <View style={styles.langTextContainer}>
+                    <Text style={text.medium}>Selected Language:</Text>
                 </View>
-                <View style={{paddingHorizontal: 10}}>
+                <View style={styles.langDropDownContainer}>
                     <DropDown items={langItems} defualt={currentLangString} callback={async lang => {
                         setCurrentLangString(lang);
                         state.currentLang = lang;
@@ -61,3 +73,19 @@ export default function Menu(){
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    tableContainer: {
+        top: "50%",
+    },
+    langContainer: {
+        top: "-90%",
+    },
+    langTextContainer: {
+        alignItems: "center",
+        padding: 10,
+    },
+    langDropDownContainer: {
+        paddingHorizontal: 10,
+    },
+})
