@@ -10,7 +10,6 @@ import { setHistory, getHistory, updateHistory } from "../src/data";
 import { fetchBatch, fetchBatches } from "../src/api";
 
 export default function Flashcard() {
-    // TODO: be able to read non-complex tables.
     const router = useRouter();
     const { table } = useLocalSearchParams();
 
