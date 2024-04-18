@@ -1,9 +1,10 @@
-import { Image, Pressable, SafeAreaView, Text, View } from "react-native";
+import { Image, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { container, text, icons, colors } from "../constants";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { getHistory, setHistory, updateHistory } from "../src/data";
 import state from "../src/state";
+import { SettingsMenu } from "../components";
 
 export default function Settings(){
 
@@ -20,92 +21,76 @@ export default function Settings(){
         router.replace({ pathname: "/flashcard", params: { table: table } });
     }
 
+    function incrementButton(symbol){
+        const icon = symbol === "plus" ? icons.plus: icons.minus
+        const func = symbol === "plus" ? () => { setCurrentId(currentId + 1) }: 
+                                         () => { setCurrentId(Math.max(currentId - 1, 1)) }
+        return (
+            <Pressable style={styles.incrementIdButtonContainer} onPress={func}>
+                <Image source={icon} tintColor={colors.fg} style={styles.increamentIdButtonImage}/>
+            </Pressable>
+        )
+    }
+
     return (
-        <SafeAreaView style={container.safeDark}>
-            <Stack.Screen options={{
-                headerShown: true,
-                headerLeft: () => (
-                    <Pressable onPress={router.back}>
-                        <Image source={icons.arrow_left} tintColor={colors.fg} style={{ width: 30, height: 30 }}/>
-                    </Pressable>
-                ),
-                headerShadowVisible: false,
-                headerTitle: "Settings",
-                headerTintColor: colors.fg,
-                headerStyle: {
-                    backgroundColor: colors.bg,
-                },
-            }} />
-            <View style={{ margin: "10%" }}>
-                <View style={{
-                    justifyContent: "space-between",
-                    flexDirection: "row",
-                    alignItems: "center",
-                }}>
-                    <Text style={text.large}>{ `${metadata.formatting.batch_title.title}:` }</Text>
-                    <View style={{
-                        backgroundColor: colors.bg,
-                        borderRadius: 10,
-                        flexDirection: "row",
-                    }}>
-                        <Pressable style={{
-                            padding: 10,
-                            justifyContent: "center",
-                        }} onPress={() => setCurrentId(currentId > 1 ? currentId - 1: 1)}>
-                            <Image source={icons.goto_arrow} tintColor={colors.fg} style={{
-                                width: 20,
-                                height: 20,
-                            }}/>
-                        </Pressable>
-                        <View style={{
-                            paddingVertical: 10,
-                        }}>
-                            <Text style={text.medium}>{ currentId }</Text>
-                        </View>
-                        <Pressable style={{
-                            padding: 10,
-                            justifyContent: "center",
-                        }} onPress={() => setCurrentId(currentId + 1)}>
-                            <Image source={icons.goto_arrow} tintColor={colors.fg} style={{
-                                width: 20,
-                                height: 20,
-                            }}/>
-                        </Pressable>
+        <SettingsMenu onBack={router.back} onConfirm={confirmSettings}>
+            <View style={styles.incrementOptionContainer}>
+                <Text style={text.large}>{ `${metadata.formatting.batch_title.title}:` }</Text>
+                <View style={styles.incrementIdContainer}>
+                    { incrementButton("minus") }
+                    <View style={styles.incrementIdText}>
+                        <Text style={text.medium}>{ currentId }</Text>
                     </View>
+                    { incrementButton("plus") }
                 </View>
-
-                <View>
-                    <Text>Reset</Text>
-                </View>
-
             </View>
 
-            <View style={{
-                flexDirection: "row",
-            }}>
-                <Pressable onPress={router.back} style={{
-                    backgroundColor: colors.bg,
-                    padding: 10,
-                    flex: 1,
-                    alignItems: "center",
-                    borderRadius: 10,
-                    marginLeft: "5%",
-                    marginRight: "2.5%",
-                }}>
-                    <Text style={text.large}>Back</Text>
+            <View style={styles.resetOptionContainer}>
+                <View style={styles.resetText}>
+                    <Text style={text.small}>Reset course to default settings.</Text>
+                </View>
+                <Pressable onPress={() => setCurrentId(1)} style={styles.resetButton}>
+                    <Text style={text.medium}>Reset</Text>
                 </Pressable>
-                <Pressable onPress={confirmSettings} style={{
-                    backgroundColor: colors.hl,
-                    padding: 10,
-                    flex: 1,
-                    marginRight: "5%",
-                    marginLeft: "2.5%",
-                    alignItems: "center",
-                    borderRadius: 10,
-                }}>
-                    <Text style={text.large}>Confirm</Text>
-                </Pressable>
-            </View>                
-        </SafeAreaView>
+            </View>
+        </SettingsMenu>
     );
 }
+
+const styles = StyleSheet.create({
+    incrementOptionContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    incrementIdContainer: {
+        backgroundColor: colors.bg,
+        borderRadius: 10,
+        flexDirection: "row",
+    },
+    incrementIdText: {
+        paddingVertical: 10,
+    },
+    incrementIdButtonContainer: {
+        padding: 10,
+        justifyContent: "center",
+    },
+    increamentIdButtonImage: {
+        width: 20,
+        height: 20,
+    },
+    resetOptionContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: "10%",
+        justifyContent: "space-between",
+    },
+    resetText: {
+        width: "60%",
+    },
+    resetButton: {
+        backgroundColor: colors.hl,
+        padding: 10,
+        alignItems: "center",
+        borderRadius: 10,
+    },
+})
