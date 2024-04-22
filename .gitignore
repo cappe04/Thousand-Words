@@ -1,6 +1,7 @@
 server/.venv
 server/app/data/db/*
 
+client/node_modules
 
 client/ios-v1.0.0/node_modules/
 client/ios-v1.0.0/.expo/
