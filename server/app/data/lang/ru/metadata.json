@@ -1,25 +1,34 @@
 {
-    "common": {
-        "filename": "common.csv",
-        "title": "1000 most common words",
-        "description": "The 1000 most common words in russian. Learn 20 words per day to understand of 85% of spoken words. If you practice daily, this will only take 50 days.",
-        "formatting": {
-            "complex": true,
-            "batch_size": 20,
-            "batch_layout": [1, 2, 3, 5, 8, 13, 21],
-            "batch_title": {
-                "title": "Day",
-                "index": true
-            }
-        }
+    "meta": {
+        "native": "Русский",
+        "en": "Russian"
     },
 
-    "numbers": {
-        "filename": "numbers.csv",
-        "title": "Numbers",
-        "description": "Learn to count to 10 in russian!",
-        "formatting": {
-            "complex": false
+    "tables": {
+        "common": {
+            "tablename": "common",
+            "filename": "common.csv",
+            "title": "1000 most common words",
+            "description": "The 1000 most common words in russian. Learn 20 words per day to understand of 85% of spoken words. If you practice daily, this will only take 50 days.",
+            "formatting": {
+                "complex": true,
+                "batch_size": 20,
+                "batch_layout": [1, 2, 3, 5, 8, 13, 21],
+                "batch_title": {
+                    "title": "Day",
+                    "index": true
+                }
+            }
+        },
+    
+        "numbers": {
+            "tablename": "numbers",
+            "filename": "numbers.csv",
+            "title": "Numbers",
+            "description": "Learn to count to 10 in russian!",
+            "formatting": {
+                "complex": false
+            }
         }
     }
 }

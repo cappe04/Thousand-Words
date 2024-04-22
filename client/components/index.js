@@ -1,34 +1,24 @@
-import NavBar from "./containers/NavBar";
-import FlashcardOptions from "./containers/FlashcardOptions";
-
-import HeaderIconButton from "./widgets/HeaderIconButton";
-
-import LearnWords from "./tabs/LearnWords";
-import PracticeWords from "./tabs/PracticeWords";
-import WordList from "./tabs/WordList";
-
-import TableList from "./menu/TableList"
-import LangList from "./menu/LangList";
-
-const common = {
-    HeaderIconButton,
-}
-
-const menu = {
-    TableList,
-    LangList,
-}
+import ErrorMessage from "./common/ErrorMessage"
+import DropDown from "./common/DropDown"
+import NavBar from "./common/NavBar"
+import SettingsMenu from "./common/SettingsMenu"
+import Redirect from "./common/Redirect"
+import MenuTableList from "./menu/MenuTableList"
+import FlashcardNavigator from "./flashcard/FlashcardNavigator"
+import FlashcardWordList from "./flashcard/FlashcardWordList"
 
 export {
+    // Common
+    ErrorMessage,
+    DropDown,
     NavBar,
-    FlashcardOptions,
+    SettingsMenu,
+    Redirect,
 
-    HeaderIconButton,
+    // menu
+    MenuTableList,
 
-    LearnWords,
-    PracticeWords,
-    WordList, 
-    
-    common,
-    menu,
+    // flashcard
+    FlashcardNavigator,
+    FlashcardWordList
 }

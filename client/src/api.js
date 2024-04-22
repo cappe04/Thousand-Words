@@ -1,6 +1,8 @@
-import state from "./state"
+// Fetches data from the api
+import { HOST, PORT } from "@env"
+import state from "./state";
 
-const proxy = "http://192.168.1.51:5000/api/"
+const proxy = `http://${HOST}:${PORT}/api/`;// `http://192.168.1.51:5000/api/`; //`http://${HOST}:${PORT}/api/`
 
 class Word {
     constructor(word, translation, type){
@@ -17,62 +19,43 @@ class Batch {
         this.title = title;
         this.use_index = use_index
     }
-
-    getTitle() {
-        return this.title + this.use_index ? " " + this.id: ""
-    }
 }
-
 
 async function fetchData(url){
-    return await fetch(proxy + url).then(response => response.json());
+    return await fetch(proxy + url).then(res => res.json());
 }
 
-async function loadMetadata(){
+export async function setMetadata(){
     state.metadata = await fetchData("info/metadata")
 }
 
-async function fetchWords(lang, table){
-    const response = await fetchData(`lang/${lang}?table=${table}`);
-    return Object.keys(response).map((i) => {
-        const word = response[i];
-        return new Word(word[1], word[2], word[3])
-    });
+export async function fetchTable(lang, table, intervall=undefined){
+    let url = `lang/${lang}?table=${table}`
+    if(intervall != undefined)
+        url += `&start=${intervall[0]}&end=${intervall[1]}`;
+
+    const data = await fetchData(url);
+    return data.map((item) => new Word(item[1], item[2], item[3]));
 }
 
-async function fetchBaches(lang, table, id){
-    if(state.metadata == null) await loadMetadata();
+export async function fetchBatch(lang, table){
+    const words = await fetchTable(lang, table);
+    return new Batch(null, words, null, null);
+}
 
-    const metadata = state.metadata[lang][table];
-    
-    const layout = metadata.formatting.batch_layout;
-    const size = metadata.formatting.batch_size;
-    
-    const data = [];
+export async function fetchBatches(lang, table, id, formatting){
+    const data = []
 
-    const promises = layout.map(async (i) => {
+    const promises = formatting.batch_layout.map(async (i) => {
         const currentId = id-i+1;
         if(currentId <= 0) return;
-        const response = await fetchData(
-            `lang/${lang}?table=${table}&start=${(currentId-1)*size+1}&end=${currentId*size}`)
-        
-        data.push(
-            new Batch(currentId, Object.keys(response).map((i) => {
-                const word = response[i];
-                return new Word(word[1], word[2], word[3]);
-            }), metadata.formatting.batch_title.title, metadata.formatting.batch_title.index))
+        const words = await fetchTable(lang, table, 
+                                       [(currentId-1)*formatting.batch_size+1, formatting.batch_size*currentId]);
+        data.push(new Batch(currentId, words, formatting.batch_title.title, 
+                            formatting.batch_title.index));                              
     })
     await Promise.all(promises);
-
-    data.sort((a, b) => b.id - a.id)
+    data.sort((a, b) => b.id - a.id);
 
     return data;
 }
-
-export default {
-    loadMetadata,
-    fetchWords,
-    fetchBaches,
-}
-
-

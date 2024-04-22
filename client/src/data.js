@@ -1,33 +1,64 @@
-import state from "./state"
+// Loads data stored locally
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import state from './state';
 
-const proxy = "../data/"
+/*
 
-async function fetchFile(path) {
-    return await fetch(proxy + path)
+currentLang: null
+
+history: {
+    ru: {
+        common: 2
+    }
 }
 
+*/
 
-async function loadUserdata(){
+// Create all required fields in storage if they don't exists
+export async function initStorage(){
+    const createIfNull = async (key, value) => {
+        if(await AsyncStorage.getItem(key) == null)
+            await AsyncStorage.setItem(key, value)
+    }
 
-    // TODO: try again
-    // const data = await fetchFile("user/userdata.json");
-
-    // console.log(data);
-
-    state.userdata = 
-    {
-        current_lang: "ru",
+    await createIfNull("history", JSON.stringify({}));
     
-        history: {
-            "ru": {
-                "common": {
-                    current_id: 10
-                }
-            }
-        }
-    };
+    // Load into memory
+    state.history = JSON.parse(await AsyncStorage.getItem("history"));
+    state.currentLang = await AsyncStorage.getItem("currentLang");
 }
 
-export default {
-    loadUserdata,
+export async function flushStorage(){
+    const data = await AsyncStorage.getAllKeys();
+    await Promise.all(data.map(async key => await AsyncStorage.removeItem(key)));
+    await initStorage();
 }
+
+export function getHistory(lang, table){
+    return state.history[lang]?.[table];
+}
+
+export function setHistory(lang, table, id){
+    state.history[lang] ??= {};
+    state.history[lang][table] = id;
+}
+
+// export async function getHistory(lang, table){
+//     const history = JSON.parse(await AsyncStorage.getItem("history"));
+//     return history[lang]?.[table];
+// }
+
+export async function updateHistory(){
+    await AsyncStorage.setItem("history", JSON.stringify(state.history));
+}
+
+export async function updateCurrentLang(){
+    await AsyncStorage.setItem("currentLang", state.currentLang);
+}
+
+// export async function getCurrentLang(){
+//     return await AsyncStorage.getItem("currentLang");
+// }
+// export async function setCurrentLang(lang){
+//     return await AsyncStorage.setItem("currentLang", lang);
+// }

@@ -1,13 +1,25 @@
 {
   "expo": {
+    "name": "thousand-words",
+    "slug": "thousand-words",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
     "scheme": "acme",
-    "web": {
-      "bundler": "metro"
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#30475E"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
     },
     "plugins": [
       "expo-router"
-    ],
-    "name": "client",
-    "slug": "client"
+    ]
   }
 }

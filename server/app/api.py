@@ -1,7 +1,8 @@
 import os
 from flask import Blueprint, current_app, request
 
-from .db import get_db, get_tables, get_metadata
+from .db import get_db, get_tables
+from .metadata import get_metadata
 
 bp = Blueprint("api", __name__)
 

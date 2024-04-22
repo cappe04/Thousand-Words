@@ -1,19 +1,12 @@
+.env
+.vscode
+
+# Server and python
+__pycache__
 server/.venv
 server/app/data/db/*
 
+# Client and node
 client/node_modules/
 client/.expo/
-client/dist/
-client/npm-debug.*
-client/*.jks
-client/*.p8
-client/*.p12
-client/*.key
-client/*.mobileprovision
-client/*.orig.*
-client/web-build/
 
-
-.env
-
-__pycache__

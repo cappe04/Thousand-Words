@@ -1,15 +1,23 @@
 {
-    "tablename": {
-        "filename": "filename.csv",
-        "title": "",
-        "description": "",
-        "formatting": {
-            "complex": true,
-            "batch_size": 0,
-            "batch_layout": [],
-            "batch_title": {
-                "title": "",
-                "index": true
+    "meta": {
+        "native": "",
+        "en": ""
+    },
+
+    "tables": {
+        "tablename": {
+            "tablename": "tablename",
+            "filename": "filename.csv",
+            "title": "",
+            "description": "",
+            "formatting": {
+                "complex": true,
+                "batch_size": 0,
+                "batch_layout": [],
+                "batch_title": {
+                    "title": "",
+                    "index": true
+                }
             }
         }
     }
