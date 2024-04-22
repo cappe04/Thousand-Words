@@ -9,4 +9,3 @@ server/app/data/db/*
 # Client and node
 client/node_modules/
 client/.expo/
-
